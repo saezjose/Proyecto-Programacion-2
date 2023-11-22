@@ -4,6 +4,8 @@ import pygame
 import random
 from plantas import Arbol, Arbusto, Flor, Hierba, Hongo
 
+#from animales import SimuladorAnimales
+
 # Inicializar Pygame
 pygame.init()
 
