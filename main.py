@@ -28,6 +28,8 @@ fondo.fill((255, 255, 255))  # Rellena el fondo con blanco (puedes cambiarlo seg
 
 # Bucle principal
 ejecutando = True
+reloj = pygame.time.Clock()  # Crear un objeto Clock
+
 while ejecutando:
     for evento in pygame.event.get():
         if evento.type == pygame.QUIT:
@@ -36,13 +38,23 @@ while ejecutando:
     # Dibujar el fondo en la pantalla
     pantalla.blit(fondo, (0, 0))
 
+
     # Dibujar el bosque en la pantalla
     for fila in range(alto_pantalla // tamaño_modulo):
         for columna in range(ancho_pantalla // tamaño_modulo):
             bosque[fila][columna].dibujar(pantalla, columna, fila, tamaño_modulo)
 
+    # Interactuar y reducir la vida de cada planta en el bosque
+    for fila in range(alto_pantalla // tamaño_modulo):
+        for columna in range(ancho_pantalla // tamaño_modulo):
+            bosque[fila][columna].interactuar()
+
+
     # Actualizar la pantalla
     pygame.display.flip()
+
+    # Limitar la tasa de frames a 60 por segundo
+    reloj.tick(60)
 
 # Salir de Pygame
 pygame.quit()
