@@ -4,80 +4,97 @@ import random as Ra
 
 tamaño_modulo = 40
 
+#------------------------------------------------------------------------------------------------------------
+
 class Planta:
-    def __init__(self, imagen, vida_max=100, estados=1):
+    def __init__(self, estados = 1, imagen = None, vida_max = 100):
         self.estados = estados
-        self.imagen = pygame.image.load(imagen)
+        self.imagen = pygame.image.load(imagen) if imagen else None
         self.vida_max = vida_max
         self.vida = vida_max
 
     def dibujar(self, superficie, x, y, tamaño_modulo):
-        superficie.blit(self.imagen, (x * tamaño_modulo, y * tamaño_modulo))
+        if self.imagen:
+            superficie.blit(self.imagen, (x * tamaño_modulo, y * tamaño_modulo))
 
     def interactuar(self):
         if self.estados == 1:
             self.vida -= Ra.uniform(0.1, 2)
             if self.vida <= 0:
                 self.morir()
-                self.estados = 0
         elif self.estados == 0:
             self.vida += Ra.uniform(0.1, 2)
             if self.vida >= self.vida_max:
                 self.revivir()
-                self.estados = 1
 
-    def morir(self):
-        pass  # La implementación específica se realizará en las subclases
+    def morir(self, imagen_muerta=None):
+        if imagen_muerta:
+            self.imagen = pygame.image.load(imagen_muerta)
+        self.estados = 0
 
-    def revivir(self):
-        pass  # La implementación específica se realizará en las subclases
+    def revivir(self, imagen_viva=None):
+        if imagen_viva:
+            self.imagen = pygame.image.load(imagen_viva)
+        self.estados = 1
+
+#------------------------------------------------------------------------------------------------------------
 
 class Arbol(Planta):
     def __init__(self):
-        super().__init__('imgplantas/arbol.png', vida_max=150, estados=1)
+        super().__init__(estados = 1, imagen='imgplantas/arbol.png', vida_max = (Ra.randint(4, 10) * 100))
 
     def morir(self):
-        self.imagen = pygame.image.load('imgplantas/arbolmuerto.png')
-    
+        super().morir(imagen_muerta='imgplantas/arbolmuerto.png')
+
     def revivir(self):
-        self.imagen = pygame.image.load('imgplantas/arbol.png')
+        super().revivir(imagen_viva='imgplantas/arbol.png')
+
+#------------------------------------------------------------------------------------------------------------
 
 class Arbusto(Planta):
     def __init__(self):
-        super().__init__('imgplantas/arbusto.png', vida_max=100, estados=1)
+        super().__init__(estados = 1, imagen='imgplantas/arbusto.png', vida_max = (Ra.randint(4, 10) * 10))
 
     def morir(self):
-        self.imagen = pygame.image.load('imgplantas/arbustomuerto.png')
+        super().morir(imagen_muerta='imgplantas/arbustomuerto.png')
 
     def revivir(self):
-        self.imagen = pygame.image.load('imgplantas/arbusto.png')
+        super().revivir(imagen_viva='imgplantas/arbusto.png')
+
+#------------------------------------------------------------------------------------------------------------
 
 class Flor(Planta):
     def __init__(self):
-        super().__init__('imgplantas/flor.png', vida_max=50, estados=1)
+        super().__init__(estados = 1, imagen='imgplantas/flor.png', vida_max = (Ra.randint(5, 6) * 10))
 
     def morir(self):
-        self.imagen = pygame.image.load('imgplantas/flormuerta.png')
+        super().morir(imagen_muerta='imgplantas/flormuerta.png')
 
     def revivir(self):
-        self.imagen = pygame.image.load('imgplantas/flor.png')
+        super().revivir(imagen_viva='imgplantas/flor.png')
+
+#------------------------------------------------------------------------------------------------------------
 
 class Hierba(Planta):
     def __init__(self):
-        super().__init__('imgplantas/hierba.png', vida_max=10, estados=1)
+        super().__init__(estados=1, imagen='imgplantas/hierba.png', vida_max = 10)
 
     def morir(self):
-        self.imagen = pygame.image.load('imgplantas/hierba.png')
-    
+        super().morir()  # No hay imagen diferente para la hierba muerta
+
     def revivir(self):
-        self.imagen = pygame.image.load('imgplantas/hierba.png')
+        super().revivir()  # No hay imagen diferente para la hierba viva
+
+#------------------------------------------------------------------------------------------------------------
 
 class Hongo(Planta):
     def __init__(self):
-        super().__init__('imgplantas/hongo.png', vida_max=80, estados=1)
+        super().__init__(estados=1, imagen='imgplantas/hongo.png', vida_max = (Ra.randint(4, 8) * 10))
 
     def morir(self):
-        self.imagen = pygame.image.load('imgplantas/hongomuerto.png')
+        super().morir(imagen_muerta='imgplantas/hongomuerto.png')
 
     def revivir(self):
-        self.imagen = pygame.image.load('imgplantas/hongo.png')
+        super().revivir(imagen_viva='imgplantas/hongo.png')
+
+#------------------------------------------------------------------------------------------------------------
