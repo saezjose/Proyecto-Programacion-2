@@ -1,11 +1,20 @@
+from tkinter import Canvas, Tk
 import pygame
 import random
 import math
+from plantas import Arbol, Arbusto, Flor, Hierba, Hongo
 
 ANCHO, ALTO = 1200, 800
 TAMANO_CELDA = 40
-DISTANCIA_CAZA = 2
-CICLOS_REPRODUCCION = 500
+DISTANCIA_CAZA = 1
+CICLOS_REPRODUCCION = 50
+
+CICLOS_ENVEJECIMIENTO = 2000
+VIDA_MAXIMA_DEPREDADOR = 100
+ENERGIA_MAXIMA_DEPREDADOR = 70
+VELOCIDAD_MIN_DEPREDADOR = 0.001
+VELOCIDAD_MAX_DEPREDADOR = 0.005
+
 
 class Organismo:
     def __init__(self, posicion, vida, energia, velocidad):
@@ -64,6 +73,10 @@ class Depredador(Organismo):
         self.imagen_path = imagen_path
         self.imagen = pygame.image.load(imagen_path).convert_alpha()
         self.imagen = pygame.transform.scale(self.imagen, (TAMANO_CELDA, TAMANO_CELDA))
+        self.ciclos_vida = 0
+        self.max_ciclos_vida = random.randint(100, 500)  # Ajusta este rango según lo que consideres apropiado
+        self.ciclos_desde_ultima_muerte = 0
+        self.muerte_anunciada = False
 
     def cazar(self, presa):
         probabilidad_exito = random.uniform(0, 1)
@@ -71,9 +84,12 @@ class Depredador(Organismo):
         if probabilidad_exito > 0.5:
             self.energia += presa.energia
             presa.vida = 0
-            return f"{self.especie} ha cazado con éxito a {presa.especie} y ha ganado energía."
+            mensaje = f"{self.especie} ha cazado con éxito a {presa.especie} y ha ganado energía."
         else:
-            return f"{self.especie} ha fallado en la caza."
+            mensaje = f"{self.especie} ha fallado en la caza."
+
+        # Mostrar el mensaje por consola
+        print(mensaje)
 
     def explorar(self, entorno):
         direcciones_posibles = [(-1, 0), (1, 0), (0, -1), (0, 1)]
@@ -85,11 +101,26 @@ class Depredador(Organismo):
         direccion = random.choice(direcciones_posibles)
         self.moverse(direccion)
 
+    def envejecer_y_morir(self):
+        self.ciclos_vida += 1
+        self.ciclos_desde_ultima_muerte += 1
+
+        if self.ciclos_vida >= self.max_ciclos_vida:
+            if not self.muerte_anunciada:
+                mensaje_muerte = f"{self.especie} ha envejecido y muerto. Ciclos restantes: {self.max_ciclos_vida - self.ciclos_vida}"
+                print(mensaje_muerte)
+                self.muerte_anunciada = True  
+            return True
+
+        return False
+    
+
 
 class Leon(Depredador):
     def __init__(self, posicion):
-        super().__init__(posicion, vida=100, energia=70, velocidad=random.uniform(0.01, 0.01),
+        super().__init__(posicion, vida=100, energia=70, velocidad=random.uniform(0.001, 0.005),
                          especie="León", dieta="Carnívoro", imagen_path="depredadoresimg/leon.png")
+        
 
 
 class Hiena(Depredador):
@@ -114,6 +145,7 @@ class Aguila(Depredador):
     def __init__(self, posicion):
         super().__init__(posicion, vida=100, energia=70, velocidad=random.uniform(0.01, 0.01),
                          especie="Águila", dieta="Carnívoro", imagen_path="depredadoresimg/aguila.png")
+        
 
 
 class Gacela(Presa):
@@ -146,98 +178,119 @@ class Antilope(Presa):
                          especie="Antílope", dieta="Herbívoro", imagen_path="presasimg/gacela.png")
 
 
-# Clase para el simulador
+
+
 class SimuladorAnimales:
-    def __init__(self):
-        pygame.init()
-        self.ventana = pygame.display.set_mode((ANCHO, ALTO))
+    def __init__(self, pantalla, bosque):
+        self.pantalla = pantalla
+        self.bosque = bosque
+
         pygame.display.set_caption("Simulador de Animales")
         self.reloj = pygame.time.Clock()
+
+        self.ventana = pygame.display.set_mode((ANCHO, ALTO))
 
         # Crear matriz para el entorno del juego
         self.entorno = [[None for _ in range(ANCHO // TAMANO_CELDA)] for _ in range(ALTO // TAMANO_CELDA)]
 
+        self.comidas = []
+
         # Crear animales depredadores
-        self.depredadores = [
-            Leon(posicion=(random.randint(0, ANCHO // TAMANO_CELDA - 1),
-                            random.randint(0, ALTO // TAMANO_CELDA - 1))),
-            Hiena(posicion=(random.randint(0, ANCHO // TAMANO_CELDA - 1),
-                             random.randint(0, ALTO // TAMANO_CELDA - 1))),
-            Zorro(posicion=(random.randint(0, ANCHO // TAMANO_CELDA - 1),
-                             random.randint(0, ALTO // TAMANO_CELDA - 1))),
-            Oso(posicion=(random.randint(0, ANCHO // TAMANO_CELDA - 1),
-                            random.randint(0, ALTO // TAMANO_CELDA - 1))),
-            Aguila(posicion=(random.randint(0, ANCHO // TAMANO_CELDA - 1),
-                              random.randint(0, ALTO // TAMANO_CELDA - 1)))
-        ]
+        self.depredadores = self.generar_animales_aleatorios(Leon, 2, 2) + \
+                            self.generar_animales_aleatorios(Hiena, 2, 3) + \
+                            self.generar_animales_aleatorios(Zorro, 2, 5) + \
+                            self.generar_animales_aleatorios(Oso, 2, 2) + \
+                            self.generar_animales_aleatorios(Aguila, 2, 4)
 
         # Crear animales presa
-        self.presas = [
-            Gacela(posicion=(random.randint(0, ANCHO // TAMANO_CELDA - 1),
-                              random.randint(0, ALTO // TAMANO_CELDA - 1))),
-            Conejo(posicion=(random.randint(0, ANCHO // TAMANO_CELDA - 1),
-                              random.randint(0, ALTO // TAMANO_CELDA - 1))),
-            Ciervo(posicion=(random.randint(0, ANCHO // TAMANO_CELDA - 1),
-                              random.randint(0, ALTO // TAMANO_CELDA - 1))),
-            Cebra(posicion=(random.randint(0, ANCHO // TAMANO_CELDA - 1),
-                             random.randint(0, ALTO // TAMANO_CELDA - 1))),
-            Antilope(posicion=(random.randint(0, ANCHO // TAMANO_CELDA - 1),
-                               random.randint(0, ALTO // TAMANO_CELDA - 1)))
-        ]
+        self.presas = self.generar_animales_aleatorios(Gacela, 2, 3) + \
+                      self.generar_animales_aleatorios(Conejo, 2, 8) + \
+                      self.generar_animales_aleatorios(Ciervo, 2, 4) + \
+                      self.generar_animales_aleatorios(Cebra, 2, 3) + \
+                      self.generar_animales_aleatorios(Antilope, 2, 3)
 
+        self.tkinter_canvas = Canvas(Tk(), width=ANCHO, height=ALTO)
+        self.tkinter_canvas.pack()
+
+
+    def generar_animales_aleatorios(self, tipo_animal, min_cantidad, max_cantidad):
+        cantidad = random.randint(min_cantidad, max_cantidad)
+        animales = [tipo_animal(posicion=(random.randint(0, ANCHO // TAMANO_CELDA - 1),
+                                          random.randint(0, ALTO // TAMANO_CELDA - 1))) for _ in range(cantidad)]
+        return animales
     def dibujar_animal(self, animal):
         self.ventana.blit(animal.imagen, (animal.posicion[0] * TAMANO_CELDA, animal.posicion[1] * TAMANO_CELDA))
 
+        
     def mostrar_mensaje(self, mensaje, x, y):
         fuente = pygame.font.Font(None, 24)
         texto = fuente.render(mensaje, True, (0, 0, 0))
         self.ventana.blit(texto, (x, y))
 
     def actualizar_entorno(self):
-        # Limpiar la matriz del entorno
+
         self.entorno = [[None for _ in range(ANCHO // TAMANO_CELDA)] for _ in range(ALTO // TAMANO_CELDA)]
 
-        # Colocar depredadores en la matriz
+       
         for depredador in self.depredadores:
             x, y = depredador.posicion
             self.entorno[y][x] = depredador
 
-        # Colocar presas en la matriz
+        
         for presa in self.presas:
             x, y = presa.posicion
             self.entorno[y][x] = presa
+
+        for comida in self.comidas:
+            x, y = comida.posicion
+            self.entorno[y][x] = comida    
 
     def ejecutar_simulacion(self):
         while True:
             for evento in pygame.event.get():
                 if evento.type == pygame.QUIT:
                     pygame.quit()
-                    quit()
+                    return
 
-            self.ventana.fill((0, 0, 0, 0))  # Rellenar el fondo con un color transparente
+            self.ventana.fill((0, 0, 0, 0))
 
             # Actualizar la matriz del entorno
             self.actualizar_entorno()
 
+            # Lista para almacenar las presas cazadas
+            presas_cazadas = []
+            # Lista para almacenar los depredadores muertos
+            depredadores_muertos = []
+
             # Lógica de la simulación para depredadores
+# Lógica de la simulación para depredadores
+            depredador_verificado = False  # Variable para rastrear si ya hemos verificado un depredador en esta iteración
+
             for depredador in self.depredadores:
-                depredador.moverse_aleatoriamente(self.entorno)
-                depredador.envejecer()
-                if depredador.reproducirse():
-                    nueva_posicion = (random.randint(0, ANCHO // TAMANO_CELDA - 1),
-                                      random.randint(0, ALTO // TAMANO_CELDA - 1))
-                    nuevo_depredador = type(depredador)(posicion=nueva_posicion)
-                    self.depredadores.append(nuevo_depredador)
+                if not depredador_verificado:
+                    depredador.moverse_aleatoriamente(self.entorno)
+                    if depredador.envejecer_y_morir():
+                        depredadores_muertos.append(depredador)
+                        depredador_verificado = True  # Marcar que ya hemos verificado un depredador
+
+            # Seleccionar un depredador de manera aleatoria para morir
+            if depredadores_muertos:
+                depredador_muerto = random.choice(depredadores_muertos)
+                self.depredadores.remove(depredador_muerto)
 
             # Lógica de la simulación para presas
+# Lógica de la simulación para presas
             for presa in self.presas:
                 presa.moverse_aleatoriamente(self.entorno)
                 presa.envejecer()
                 if presa.reproducirse():
                     nueva_posicion = (random.randint(0, ANCHO // TAMANO_CELDA - 1),
-                                      random.randint(0, ALTO // TAMANO_CELDA - 1))
+                                    random.randint(0, ALTO // TAMANO_CELDA - 1))
                     nueva_presa = type(presa)(posicion=nueva_posicion)
                     self.presas.append(nueva_presa)
+
+                # Lógica para consumir comida
+                
 
             # Lógica de caza
             for depredador in self.depredadores:
@@ -248,6 +301,11 @@ class SimuladorAnimales:
                         if distancia < DISTANCIA_CAZA:
                             mensaje_caza = depredador.cazar(presa)
                             self.mostrar_mensaje(mensaje_caza, 10, 10)
+                            # Agregar la presa cazada a la lista
+                            presas_cazadas.append(presa)
+
+            # Eliminar las presas cazadas de la lista principal de presas
+            self.presas = [presa for presa in self.presas if presa not in presas_cazadas]
 
             # Dibujar animales en la ventana
             for fila in self.entorno:
@@ -255,9 +313,11 @@ class SimuladorAnimales:
                     if organismo is not None:
                         self.dibujar_animal(organismo)
 
-            pygame.display.update()
-            self.reloj.tick(5)
+            for comida in self.comidas:
+                self.dibujar_comida(comida)
 
-# Inicializar y ejecutar el simulador
-simulador = SimuladorAnimales()
-simulador.ejecutar_simulacion()
+          
+
+            # Actualizar la pantalla
+            pygame.display.update()
+            self.reloj.tick(2)
