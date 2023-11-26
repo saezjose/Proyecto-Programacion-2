@@ -1,5 +1,5 @@
 from tkinter import Canvas, Tk
-import pygame
+import pygame as pg
 import random
 import math
 from plantas import Arbol, Arbusto, Flor, Hierba, Hongo
@@ -30,7 +30,6 @@ class Organismo:
         nueva_x = x + dx
         nueva_y = y + dy
 
-        # Ajustar las posiciones para que los organismos aparezcan en el lado opuesto al salir de los límites
         nueva_x %= ANCHO // TAMANO_CELDA
         nueva_y %= ALTO // TAMANO_CELDA
 
@@ -56,8 +55,8 @@ class Presa(Organismo):
         self.especie = especie
         self.dieta = dieta
         self.imagen_path = imagen_path
-        self.imagen = pygame.image.load(imagen_path).convert_alpha()
-        self.imagen = pygame.transform.scale(self.imagen, (TAMANO_CELDA, TAMANO_CELDA))
+        self.imagen = pg.image.load(imagen_path).convert_alpha()
+        self.imagen = pg.transform.scale(self.imagen, (TAMANO_CELDA, TAMANO_CELDA))
 
     def moverse_aleatoriamente(self, entorno):
         direcciones_posibles = [(-1, 0), (1, 0), (0, -1), (0, 1)]
@@ -71,10 +70,10 @@ class Depredador(Organismo):
         self.especie = especie
         self.dieta = dieta
         self.imagen_path = imagen_path
-        self.imagen = pygame.image.load(imagen_path).convert_alpha()
-        self.imagen = pygame.transform.scale(self.imagen, (TAMANO_CELDA, TAMANO_CELDA))
+        self.imagen = pg.image.load(imagen_path).convert_alpha()
+        self.imagen = pg.transform.scale(self.imagen, (TAMANO_CELDA, TAMANO_CELDA))
         self.ciclos_vida = 0
-        self.max_ciclos_vida = random.randint(100, 500)  # Ajusta este rango según lo que consideres apropiado
+        self.max_ciclos_vida = random.randint(100, 500) 
         self.ciclos_desde_ultima_muerte = 0
         self.muerte_anunciada = False
 
@@ -181,54 +180,49 @@ class Antilope(Presa):
 
 
 class SimuladorAnimales:
-    def __init__(self, pantalla, bosque):
+    def __init__(self, pantalla, bosque, ventana):
         self.pantalla = pantalla
         self.bosque = bosque
+        self.reloj = pg.time.Clock()
 
-        pygame.display.set_caption("Simulador de Animales")
-        self.reloj = pygame.time.Clock()
+        self.ventana = pg.display.set_mode((ANCHO, ALTO))
 
-        self.ventana = pygame.display.set_mode((ANCHO, ALTO))
-
-        # Crear matriz para el entorno del juego
         self.entorno = [[None for _ in range(ANCHO // TAMANO_CELDA)] for _ in range(ALTO // TAMANO_CELDA)]
 
         self.comidas = []
 
-        # Crear animales depredadores
+       
         self.depredadores = self.generar_animales_aleatorios(Leon, 2, 2) + \
                             self.generar_animales_aleatorios(Hiena, 2, 3) + \
                             self.generar_animales_aleatorios(Zorro, 2, 5) + \
                             self.generar_animales_aleatorios(Oso, 2, 2) + \
                             self.generar_animales_aleatorios(Aguila, 2, 4)
 
-        # Crear animales presa
+       
         self.presas = self.generar_animales_aleatorios(Gacela, 2, 3) + \
                       self.generar_animales_aleatorios(Conejo, 2, 8) + \
                       self.generar_animales_aleatorios(Ciervo, 2, 4) + \
                       self.generar_animales_aleatorios(Cebra, 2, 3) + \
                       self.generar_animales_aleatorios(Antilope, 2, 3)
 
-        self.tkinter_canvas = Canvas(Tk(), width=ANCHO, height=ALTO)
-        self.tkinter_canvas.pack()
-
+        
 
     def generar_animales_aleatorios(self, tipo_animal, min_cantidad, max_cantidad):
         cantidad = random.randint(min_cantidad, max_cantidad)
         animales = [tipo_animal(posicion=(random.randint(0, ANCHO // TAMANO_CELDA - 1),
                                           random.randint(0, ALTO // TAMANO_CELDA - 1))) for _ in range(cantidad)]
         return animales
-    def dibujar_animal(self, animal):
-        self.ventana.blit(animal.imagen, (animal.posicion[0] * TAMANO_CELDA, animal.posicion[1] * TAMANO_CELDA))
+    
+    def dibujar_animal(self, animal, ventana):
+        ventana.blit(animal.imagen, (animal.posicion[0] * TAMANO_CELDA, animal.posicion[1] * TAMANO_CELDA))
 
         
     def mostrar_mensaje(self, mensaje, x, y):
-        fuente = pygame.font.Font(None, 24)
+        fuente = pg.font.Font(None, 24)
         texto = fuente.render(mensaje, True, (0, 0, 0))
         self.ventana.blit(texto, (x, y))
 
-    def actualizar_entorno(self):
-
+    def actualizar_entorno(self, ventana):
         self.entorno = [[None for _ in range(ANCHO // TAMANO_CELDA)] for _ in range(ALTO // TAMANO_CELDA)]
 
        
@@ -245,41 +239,37 @@ class SimuladorAnimales:
             x, y = comida.posicion
             self.entorno[y][x] = comida    
 
-    def ejecutar_simulacion(self):
+    def ejecutar_simulacion(self, ventana):
         while True:
-            for evento in pygame.event.get():
-                if evento.type == pygame.QUIT:
-                    pygame.quit()
+            for evento in pg.event.get():
+                if evento.type == pg.QUIT:
+                    pg.quit()
                     return
 
-            self.ventana.fill((0, 0, 0, 0))
 
-            # Actualizar la matriz del entorno
-            self.actualizar_entorno()
+           
+            self.actualizar_entorno(ventana)
 
-            # Lista para almacenar las presas cazadas
             presas_cazadas = []
-            # Lista para almacenar los depredadores muertos
+        
             depredadores_muertos = []
 
-            # Lógica de la simulación para depredadores
-# Lógica de la simulación para depredadores
-            depredador_verificado = False  # Variable para rastrear si ya hemos verificado un depredador en esta iteración
+          
+            depredador_verificado = False  
 
             for depredador in self.depredadores:
                 if not depredador_verificado:
                     depredador.moverse_aleatoriamente(self.entorno)
                     if depredador.envejecer_y_morir():
                         depredadores_muertos.append(depredador)
-                        depredador_verificado = True  # Marcar que ya hemos verificado un depredador
+                        depredador_verificado = True  
 
-            # Seleccionar un depredador de manera aleatoria para morir
+    
             if depredadores_muertos:
                 depredador_muerto = random.choice(depredadores_muertos)
                 self.depredadores.remove(depredador_muerto)
 
-            # Lógica de la simulación para presas
-# Lógica de la simulación para presas
+            
             for presa in self.presas:
                 presa.moverse_aleatoriamente(self.entorno)
                 presa.envejecer()
@@ -289,10 +279,8 @@ class SimuladorAnimales:
                     nueva_presa = type(presa)(posicion=nueva_posicion)
                     self.presas.append(nueva_presa)
 
-                # Lógica para consumir comida
-                
+             
 
-            # Lógica de caza
             for depredador in self.depredadores:
                 for presa in self.presas:
                     if presa is not None:
@@ -301,23 +289,15 @@ class SimuladorAnimales:
                         if distancia < DISTANCIA_CAZA:
                             mensaje_caza = depredador.cazar(presa)
                             self.mostrar_mensaje(mensaje_caza, 10, 10)
-                            # Agregar la presa cazada a la lista
                             presas_cazadas.append(presa)
 
-            # Eliminar las presas cazadas de la lista principal de presas
             self.presas = [presa for presa in self.presas if presa not in presas_cazadas]
 
-            # Dibujar animales en la ventana
             for fila in self.entorno:
                 for organismo in fila:
                     if organismo is not None:
-                        self.dibujar_animal(organismo)
-
-            for comida in self.comidas:
-                self.dibujar_comida(comida)
-
+                        self.dibujar_animal(organismo, ventana)
+            
           
-
-            # Actualizar la pantalla
-            pygame.display.update()
+            pg.display.update()
             self.reloj.tick(2)
