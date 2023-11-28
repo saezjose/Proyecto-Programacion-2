@@ -1,0 +1,33 @@
+Estado: Dia
+
+Depredadores:
+Leon - Posicion: (11, 3), Vida: 100, Energia: 70
+Leon - Posicion: (28, 8), Vida: 100, Energia: 70
+Hiena - Posicion: (19, 11), Vida: 100, Energia: 70
+Hiena - Posicion: (14, 3), Vida: 100, Energia: 70
+Hiena - Posicion: (14, 18), Vida: 100, Energia: 70
+Zorro - Posicion: (25, 19), Vida: 100, Energia: 70
+Zorro - Posicion: (10, 8), Vida: 100, Energia: 70
+Oso - Posicion: (20, 12), Vida: 100, Energia: 70
+Oso - Posicion: (10, 5), Vida: 100, Energia: 70
+Aguila - Posicion: (23, 16), Vida: 100, Energia: 70
+Aguila - Posicion: (8, 1), Vida: 100, Energia: 70
+Aguila - Posicion: (27, 7), Vida: 100, Energia: 70
+Aguila - Posicion: (3, 17), Vida: 100, Energia: 70
+
+Presas:
+Gacela - Posicion: (22, 10), Vida: 75, Energia: 50
+Gacela - Posicion: (29, 9), Vida: 75, Energia: 50
+Conejo - Posicion: (21, 12), Vida: 75, Energia: 50
+Conejo - Posicion: (26, 12), Vida: 75, Energia: 50
+Conejo - Posicion: (7, 0), Vida: 75, Energia: 50
+Ciervo - Posicion: (5, 5), Vida: 75, Energia: 50
+Ciervo - Posicion: (11, 12), Vida: 75, Energia: 50
+Ciervo - Posicion: (3, 13), Vida: 75, Energia: 50
+Ciervo - Posicion: (1, 11), Vida: 75, Energia: 50
+Cebra - Posicion: (10, 2), Vida: 75, Energia: 50
+Cebra - Posicion: (15, 1), Vida: 75, Energia: 50
+Cebra - Posicion: (28, 17), Vida: 75, Energia: 50
+Antilope - Posicion: (19, 18), Vida: 75, Energia: 50
+Antilope - Posicion: (11, 2), Vida: 75, Energia: 50
+Antilope - Posicion: (17, 15), Vida: 75, Energia: 50
