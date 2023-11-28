@@ -1,34 +1,28 @@
-Estado: Dia
+Estado: Noche
 
 Depredadores:
-Leon - Posicion: (22, 9), Vida: 100, Energia: 70
-Leon - Posicion: (5, 5), Vida: 100, Energia: 70
-Hiena - Posicion: (23, 4), Vida: 100, Energia: 70
-Hiena - Posicion: (6, 8), Vida: 100, Energia: 70
-Hiena - Posicion: (24, 6), Vida: 100, Energia: 70
-Zorro - Posicion: (21, 7), Vida: 100, Energia: 70
-Zorro - Posicion: (8, 8), Vida: 100, Energia: 70
-Oso - Posicion: (16, 7), Vida: 100, Energia: 70
-Oso - Posicion: (7, 11), Vida: 100, Energia: 70
-Aguila - Posicion: (2, 9), Vida: 100, Energia: 70
-Aguila - Posicion: (13, 10), Vida: 100, Energia: 70
-Aguila - Posicion: (8, 19), Vida: 100, Energia: 70
-Aguila - Posicion: (13, 0), Vida: 100, Energia: 70
+Leon - Posicion: (12, 15), Vida: 100, Energia: 70
+Leon - Posicion: (19, 15), Vida: 100, Energia: 120
+Hiena - Posicion: (8, 6), Vida: 100, Energia: 70
+Hiena - Posicion: (3, 5), Vida: 100, Energia: 120
+Hiena - Posicion: (25, 0), Vida: 100, Energia: 70
+Zorro - Posicion: (6, 18), Vida: 100, Energia: 70
+Zorro - Posicion: (3, 6), Vida: 100, Energia: 120
+Oso - Posicion: (15, 19), Vida: 100, Energia: 70
+Oso - Posicion: (2, 8), Vida: 100, Energia: 70
+Aguila - Posicion: (18, 4), Vida: 100, Energia: 70
+Aguila - Posicion: (5, 13), Vida: 100, Energia: 70
 
 Presas:
-Gacela - Posicion: (1, 10), Vida: 76, Energia: 50
-Gacela - Posicion: (1, 19), Vida: 76, Energia: 50
-Conejo - Posicion: (17, 8), Vida: 76, Energia: 50
-Conejo - Posicion: (15, 2), Vida: 76, Energia: 50
-Conejo - Posicion: (4, 2), Vida: 76, Energia: 50
-Conejo - Posicion: (18, 5), Vida: 76, Energia: 50
-Conejo - Posicion: (23, 17), Vida: 76, Energia: 50
-Conejo - Posicion: (25, 11), Vida: 76, Energia: 50
-Conejo - Posicion: (3, 7), Vida: 76, Energia: 50
-Ciervo - Posicion: (12, 19), Vida: 76, Energia: 50
-Ciervo - Posicion: (22, 14), Vida: 76, Energia: 50
-Cebra - Posicion: (17, 12), Vida: 76, Energia: 50
-Cebra - Posicion: (2, 15), Vida: 76, Energia: 50
-Antilope - Posicion: (22, 4), Vida: 76, Energia: 50
-Antilope - Posicion: (4, 8), Vida: 76, Energia: 50
-Antilope - Posicion: (24, 4), Vida: 76, Energia: 50
+Gacela - Posicion: (14, 15), Vida: 52, Energia: 50
+Gacela - Posicion: (27, 16), Vida: 52, Energia: 50
+Conejo - Posicion: (29, 14), Vida: 52, Energia: 50
+Conejo - Posicion: (12, 19), Vida: 52, Energia: 50
+Conejo - Posicion: (14, 3), Vida: 52, Energia: 50
+Conejo - Posicion: (12, 11), Vida: 52, Energia: 50
+Conejo - Posicion: (22, 6), Vida: 52, Energia: 50
+Conejo - Posicion: (8, 19), Vida: 52, Energia: 50
+Ciervo - Posicion: (11, 7), Vida: 52, Energia: 50
+Cebra - Posicion: (6, 5), Vida: 52, Energia: 50
+Cebra - Posicion: (24, 15), Vida: 52, Energia: 50
+Antilope - Posicion: (16, 4), Vida: 52, Energia: 50

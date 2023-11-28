@@ -3,7 +3,7 @@
 import pygame
 import random
 from plantas import Arbol, Arbusto, Flor, Hierba, Hongo
-from animales import SimuladorAnimales
+#from animales import SimuladorAnimales
 
 #------------------------------------------------------------------------------------------------------------
 
@@ -18,15 +18,15 @@ pygame.display.set_caption("Bosque con Plantas")
 
 
 bosque = [
-    [random.choice([Arbol(), Arbusto(), Flor(), Hierba(), Hongo()]) for _ in range(ancho_pantalla // tamaño_modulo)]
-    for _ in range(alto_pantalla // tamaño_modulo)
+    [random.choice([Arbol(x,y), Arbusto(x,y), Flor(x,y), Hierba(x,y), Hongo(x,y)]) for x in range(ancho_pantalla // tamaño_modulo)]
+    for y in range(alto_pantalla // tamaño_modulo)
 ]
 
 fondo = pygame.Surface((ancho_pantalla, alto_pantalla))
 fondo.fill((255, 255, 255))
 
 
-simulador = SimuladorAnimales(pantalla, bosque, fondo)
+#simulador = SimuladorAnimales(pantalla, bosque, fondo)
 
 
 ejecutando = True
@@ -57,8 +57,8 @@ while ejecutando:
     reloj.tick(60)
 
    
-    simulador.ejecutar_simulacion(pantalla)
-    simulador.guardar_datos("datos_simulacion.txt")
+#    simulador.ejecutar_simulacion(pantalla)
+#    simulador.guardar_datos("datos_simulacion.txt")
     
 
 pygame.quit()
