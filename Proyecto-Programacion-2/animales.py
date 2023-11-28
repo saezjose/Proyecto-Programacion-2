@@ -1,4 +1,7 @@
 #------------------------------------------------------------------------------------------------------------
+
+#Importamos las librerias.
+
 from tkinter import Canvas, Tk
 import pygame as pg
 import random
@@ -12,6 +15,8 @@ CICLOS_REPRODUCCION = 50
 
 
 #------------------------------------------------------------------------------------------------------------
+
+#Aca definimos clases de los Organismos, con sus metodos y atributos.
 
 class Organismo:
     def __init__(self, posicion, vida, energia, velocidad):
@@ -47,6 +52,7 @@ class Organismo:
 
 #------------------------------------------------------------------------------------------------------------
 
+# Aca definimos las clases de Depredadores y Presas tambien con sus Funciones y atributos. 
 
 class Presa(Organismo):
     def __init__(self, posicion, vida, energia, velocidad, especie, dieta, imagen_path):
@@ -114,7 +120,7 @@ class Depredador(Organismo):
 
 #------------------------------------------------------------------------------------------------------------
 
-
+#Definimos las Clases de cada animal ya sea depredador o presa.
 
 class Leon(Depredador):
     def __init__(self, posicion):
@@ -188,7 +194,7 @@ class Antilope(Presa):
 
 #------------------------------------------------------------------------------------------------------------
 
-
+#Aca creamos la clase Simulador animales la cual se encargara de toda la Simulacion del ecosistema ya sea la logica de caza, movimiento, reproduccion, y ejecucion de la simulacion.
 
 class SimuladorAnimales:
     def __init__(self, pantalla, bosque, ventana):
@@ -281,8 +287,6 @@ class SimuladorAnimales:
             
             fondo_imagen_path = "imgplantas/dia.png" if self.dia else "imgplantas/noche.png"
             fondo_imagen = pg.image.load(fondo_imagen_path).convert()
-
-            #ventana.fill((0, 0, 0, 0))
 
             ventana.blit(fondo_imagen, (0, 0))
             self.actualizar_entorno(ventana)

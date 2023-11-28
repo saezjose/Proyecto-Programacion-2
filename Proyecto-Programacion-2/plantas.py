@@ -3,9 +3,12 @@ import pygame
 import random as Ra
 
 tamaño_modulo = 40
+
 ARCHIVO = "capturadora_eventos.txt"
 
 #------------------------------------------------------------------------------------------------------------
+
+# Se crea una clase Padre que se llama planta que se encarga de la simulacion general de las plantas ya sea dibujar las plantas en el entorno asi como su ciclo de vida y muerte.
 
 class Planta:
     def __init__(self, estados = 1, imagen = None, vida_max = 100):
@@ -51,6 +54,8 @@ class Planta:
         self.guardar_datos_plantas(ARCHIVO, self.estados, self.x, self.y)
 
 #------------------------------------------------------------------------------------------------------------
+
+# Son subclases o clase hijo que se encarga de importar las imagenes de cada planta para poder dibujarlas en pantalla
 
 class Arbol(Planta):
     def __init__(self, x, y):
@@ -121,4 +126,3 @@ class Hongo(Planta):
         super().revivir(imagen_viva='imgplantas/hongo.png')
 
 #------------------------------------------------------------------------------------------------------------
-
