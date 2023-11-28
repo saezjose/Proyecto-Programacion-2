@@ -37,6 +37,18 @@ class Planta:
             self.imagen = pygame.image.load(imagen_viva)
         self.estados = 1
 
+
+
+    def guardar_datos_plantas(bosque, archivo):
+    with open(archivo, 'a') as file:
+        for fila in range( tamaño_modulo):
+            for columna in range(tamaño_modulo):
+                planta = bosque[fila][columna]
+                estado_planta = "Viva" if planta.estados == 1 else "Muerta"
+                file.write(f"Planta posicion ({columna}, {fila}) Estado: {estado_planta}\n")
+
+    guardar_datos_plantas(bosque, "datos_simulacion_plantas.txt")           
+
 #------------------------------------------------------------------------------------------------------------
 
 class Arbol(Planta):
