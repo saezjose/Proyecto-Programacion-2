@@ -35,10 +35,10 @@ while ejecutando:
         if evento.type == pygame.QUIT:
             ejecutando = False
 
-  
+
     pantalla.blit(fondo, (0, 0))
 
-   
+
 
     
     for fila in range(alto_pantalla // tamaño_modulo):
