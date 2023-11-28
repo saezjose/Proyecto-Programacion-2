@@ -3,15 +3,18 @@ import pygame
 import random as Ra
 
 tamaño_modulo = 40
+ARCHIVO = "capturadora_eventos"
 
 #------------------------------------------------------------------------------------------------------------
 
 class Planta:
-    def __init__(self, estados = 1, imagen = None, vida_max = 100):
+    def __init__(self, estados = 1, imagen = None, vida_max = 100, x = 0 , y = 0):
         self.estados = estados
         self.imagen = pygame.image.load(imagen) if imagen else None
         self.vida_max = vida_max
         self.vida = vida_max
+        self.x = x
+        self.y = y
 
     def dibujar(self, superficie, x, y, tamaño_modulo):
         if self.imagen:
@@ -27,27 +30,27 @@ class Planta:
             if self.vida >= self.vida_max:
                 self.revivir()
 
+    def guardar_datos_plantas(self,archivo, estado,x,y):
+        if estado == 1:
+            estado_planta = "viva"
+        elif estado == 0:
+            estado_planta = "muelta"
+        with open(archivo, 'a') as file:
+            file.write(f"Planta posicion ({x}, {y}) Estado: {estado_planta}\n")
+
+
     def morir(self, imagen_muerta=None):
         if imagen_muerta:
             self.imagen = pygame.image.load(imagen_muerta)
         self.estados = 0
+        self.guardar_datos_plantas(ARCHIVO, self.estados, self.x, self.y)
 
     def revivir(self, imagen_viva=None):
         if imagen_viva:
             self.imagen = pygame.image.load(imagen_viva)
         self.estados = 1
+        self.guardar_datos_plantas(ARCHIVO, self.estados, self.x, self.y)
 
-
-
-    def guardar_datos_plantas(bosque, archivo):
-    with open(archivo, 'a') as file:
-        for fila in range( tamaño_modulo):
-            for columna in range(tamaño_modulo):
-                planta = bosque[fila][columna]
-                estado_planta = "Viva" if planta.estados == 1 else "Muerta"
-                file.write(f"Planta posicion ({columna}, {fila}) Estado: {estado_planta}\n")
-
-    guardar_datos_plantas(bosque, "datos_simulacion_plantas.txt")           
 
 #------------------------------------------------------------------------------------------------------------
 
