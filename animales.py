@@ -1,20 +1,17 @@
+#------------------------------------------------------------------------------------------------------------
 from tkinter import Canvas, Tk
 import pygame as pg
 import random
 import math
-from plantas import Arbol, Arbusto, Flor, Hierba, Hongo
+import os
 
 ANCHO, ALTO = 1200, 800
 TAMANO_CELDA = 40
 DISTANCIA_CAZA = 1
 CICLOS_REPRODUCCION = 50
 
-CICLOS_ENVEJECIMIENTO = 2000
-VIDA_MAXIMA_DEPREDADOR = 100
-ENERGIA_MAXIMA_DEPREDADOR = 70
-VELOCIDAD_MIN_DEPREDADOR = 0.001
-VELOCIDAD_MAX_DEPREDADOR = 0.005
 
+#------------------------------------------------------------------------------------------------------------
 
 class Organismo:
     def __init__(self, posicion, vida, energia, velocidad):
@@ -47,6 +44,8 @@ class Organismo:
         if self.vida <= 0:
             return True
         return False
+
+#------------------------------------------------------------------------------------------------------------
 
 
 class Presa(Organismo):
@@ -87,7 +86,6 @@ class Depredador(Organismo):
         else:
             mensaje = f"{self.especie} ha fallado en la caza."
 
-        # Mostrar el mensaje por consola
         print(mensaje)
 
     def explorar(self, entorno):
@@ -114,11 +112,14 @@ class Depredador(Organismo):
         return False
     
 
+#------------------------------------------------------------------------------------------------------------
+
+
 
 class Leon(Depredador):
     def __init__(self, posicion):
         super().__init__(posicion, vida=100, energia=70, velocidad=random.uniform(0.001, 0.005),
-                         especie="León", dieta="Carnívoro", imagen_path="depredadoresimg/leon.png")
+                         especie="Leon", dieta="Carnívoro", imagen_path="depredadoresimg/leon.png")
         
 
 
@@ -143,7 +144,7 @@ class Oso(Depredador):
 class Aguila(Depredador):
     def __init__(self, posicion):
         super().__init__(posicion, vida=100, energia=70, velocidad=random.uniform(0.01, 0.01),
-                         especie="Águila", dieta="Carnívoro", imagen_path="depredadoresimg/aguila.png")
+                         especie="Aguila", dieta="Carnívoro", imagen_path="depredadoresimg/aguila.png")
         
 
 
@@ -174,8 +175,18 @@ class Cebra(Presa):
 class Antilope(Presa):
     def __init__(self, posicion):
         super().__init__(posicion, vida=80, energia=50, velocidad=random.uniform(0.1, 0.5),
-                         especie="Antílope", dieta="Herbívoro", imagen_path="presasimg/gacela.png")
+                         especie="Antilope", dieta="Herbívoro", imagen_path="presasimg/gacela.png")
 
+
+
+
+#------------------------------------------------------------------------------------------------------------
+
+
+
+
+
+#------------------------------------------------------------------------------------------------------------
 
 
 
@@ -185,7 +196,12 @@ class SimuladorAnimales:
         self.bosque = bosque
         self.reloj = pg.time.Clock()
 
+        self.dia = True 
+        self.tiempo_cambio = 24  
+        self.ciclos_transcurridos = 0 
+
         self.ventana = pg.display.set_mode((ANCHO, ALTO))
+        
 
         self.entorno = [[None for _ in range(ANCHO // TAMANO_CELDA)] for _ in range(ALTO // TAMANO_CELDA)]
 
@@ -204,6 +220,21 @@ class SimuladorAnimales:
                       self.generar_animales_aleatorios(Ciervo, 2, 4) + \
                       self.generar_animales_aleatorios(Cebra, 2, 3) + \
                       self.generar_animales_aleatorios(Antilope, 2, 3)
+        
+
+    def guardar_datos(self, archivo):
+        with open(archivo, 'w') as file:
+            file.write(f"Estado: {'Dia' if self.dia else 'Noche'}\n\n")
+
+            file.write("Depredadores:\n")
+            for depredador in self.depredadores:
+                file.write(f"{depredador.especie} - Posicion: {depredador.posicion}, Vida: {depredador.vida}, Energia: {depredador.energia}\n")
+
+            file.write("\nPresas:\n")
+            for presa in self.presas:
+                file.write(f"{presa.especie} - Posicion: {presa.posicion}, Vida: {presa.vida}, Energia: {presa.energia}\n")
+
+                    
 
         
 
@@ -239,16 +270,25 @@ class SimuladorAnimales:
             x, y = comida.posicion
             self.entorno[y][x] = comida    
 
+
+
     def ejecutar_simulacion(self, ventana):
         while True:
             for evento in pg.event.get():
                 if evento.type == pg.QUIT:
                     pg.quit()
                     return
+            
+            fondo_imagen_path = "imgplantas/dia.png" if self.dia else "imgplantas/noche.png"
+            fondo_imagen = pg.image.load(fondo_imagen_path).convert()
 
+            #ventana.fill((0, 0, 0, 0))
 
-           
+            ventana.blit(fondo_imagen, (0, 0))
             self.actualizar_entorno(ventana)
+
+
+            
 
             presas_cazadas = []
         
@@ -297,7 +337,19 @@ class SimuladorAnimales:
                 for organismo in fila:
                     if organismo is not None:
                         self.dibujar_animal(organismo, ventana)
+
+            self.ciclos_transcurridos += 1
+
+            
+            if self.ciclos_transcurridos >= self.tiempo_cambio:
+                self.ciclos_transcurridos = 0  
+                self.dia = not self.dia 
+                print(f"Estado:  {'Es de Dia' if self.dia else 'Es de Noche'}")
+
+                        
             
           
             pg.display.update()
             self.reloj.tick(2)
+
+#------------------------------------------------------------------------------------------------------------
