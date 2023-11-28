@@ -3,7 +3,6 @@
 import pygame
 import random
 from plantas import Arbol, Arbusto, Flor, Hierba, Hongo
-from ciclosdia import CicloDiaNoche
 from animales import SimuladorAnimales
 
 pygame.init()
