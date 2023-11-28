@@ -8,7 +8,7 @@ ARCHIVO = "capturadora_eventos"
 #------------------------------------------------------------------------------------------------------------
 
 class Planta:
-    def __init__(self, estados = 1, imagen = None, vida_max = 100, x = 0 , y = 0):
+    def __init__(self, x, y, estados = 1, imagen = None, vida_max = 100):
         self.estados = estados
         self.imagen = pygame.image.load(imagen) if imagen else None
         self.vida_max = vida_max

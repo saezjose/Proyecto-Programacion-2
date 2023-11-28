@@ -18,8 +18,8 @@ pygame.display.set_caption("Bosque con Plantas")
 
 
 
-bosque = [[random.choice([Arbol(), Arbusto(), Flor(), Hierba(), Hongo()]) for _ in range(ancho_pantalla // tamaño_modulo)]
-          for _ in range(alto_pantalla // tamaño_modulo)]
+bosque = [[random.choice([Arbol(x,y), Arbusto(x,y), Flor(x,y), Hierba(x,y), Hongo(x,y)]) for x in range(ancho_pantalla // tamaño_modulo)]
+          for y in range(alto_pantalla // tamaño_modulo)]
 
 
 fondo = pygame.Surface((ancho_pantalla, alto_pantalla))
