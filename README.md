@@ -44,7 +44,7 @@ eventos en un archivo (log) o un archivo de texto como podemos ver a continuacio
 [![Agregar-un-t-tulo.png](https://i.postimg.cc/8cPG0cwM/Agregar-un-t-tulo.png)](https://postimg.cc/r0b7d8Bw)
 
 
-##Si deseamos realizar cambios a nuestra simulacion podemos hacer lo siguiente.
+## Si deseamos realizar cambios a nuestra simulacion podemos hacer lo siguiente.
 
 En la linea 14 y 16 de nuestro archivo `animales.py` podremos modificar la cantidad de ciclos o de tiempo de cada reproduccion de los animales y la distancia de caza que pueden tener los depredadores al cazar sus presas.
 
