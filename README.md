@@ -28,6 +28,8 @@ las interacciones de flora y fauna en un ambiente dinámico y visualmente accesi
 Para utilzar nuestro simulador basta con ejecutar el archivo `mainprincipal.py` esto nos creara la siguiente ventana.
 
 [![captura.png](https://i.postimg.cc/dtz4VXdT/captura.png)](https://postimg.cc/kBvxjTTn)
- 
+
+
+esto nos muestra la simulacion ejecutandose la cual nos muestra un bosque generado con matrices de manera aleatoria y ademas podemos observar un ecosistema de animales ya sean depredadores como sus presas las cuales tienen una logica de que cuando el depredador se acerca a la presa hay una probabilidad de que la caze o falle en el intento. ademas de ciclos de vida de los depredadores despues de cierto tiempo el animal muere y tambien ciclos de reproduccion de ambos lados tanto depredadores y presas despues de una cierta cantidad de ciclos estos se reproducen. y tambien esta la existencia de ciclos de dia y de noche despues de cierta cantidad de ciclos se hace de dia o de noche.
 
 
