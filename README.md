@@ -9,7 +9,7 @@ Las interacciones de flora y fauna en un ambiente dinámico y visualmente accesi
 
 ## Guia de instalacion. 
 
-- Para instalar nuestro simulador del ecosistema  primero que nada uno de los requerimientos es tener instalado previamente instalado Visual Studio Code para poder ejectuar nuestro Simulador.
+- Para instalar nuestro simulador del ecosistema  primero que nada uno de los requerimientos es tener instalado previamente instalado Python y las librerias como Pygame y Math para poder ejectuar nuestro Simulador.
 
 - Una vez dicho esto para instalar nuestro simulador solo basta con abrir el CMD o "símbolo del sistema" que se encuentra en nuestro ordenador y hacer un git clone a nuestro repositorio. 
 
