@@ -9,10 +9,20 @@ las interacciones de flora y fauna en un ambiente dinámico y visualmente accesi
 
 ## Guia de instalacion. 
 
-Para instalar nuestro simulador del ecosistema  primero que nada uno de los requerimientos es tener instalado previamente instalado Visual Studio Code para poder ejectuar nuestro Simulador.
+- Para instalar nuestro simulador del ecosistema  primero que nada uno de los requerimientos es tener instalado previamente instalado Visual Studio Code para poder ejectuar nuestro Simulador.
 
-Una vez dicho esto para instalar instalar nuestro simulador solo basta con abrir el CMD o "simbolo del sistema" que se encuentra en nuestro ordenador y hacer un git clone a nuestro repositorio. 
+- Una vez dicho esto para instalar instalar nuestro simulador solo basta con abrir el CMD o "simbolo del sistema" que se encuentra en nuestro ordenador y hacer un git clone a nuestro repositorio. 
 
- `git clone `
+ `git clone  https://github.com/saezjose/Proyecto-Programacion-2.git`    
+
+ - una vez colocado el comando anteriormente mencionado descargara todos los archivos necesarios para el buen funcionamiento de nuestra simulacion.
+
+ - abrimos Visual Studio Code.
+
+ - y buscamos nuestra carpeta anterior mente descargada.
+
+ - y listo tendremos nuestra simulacion lista para ser utilizada.
+
+ 
 
 
