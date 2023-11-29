@@ -44,5 +44,9 @@ eventos en un archivo (log) o un archivo de texto como podemos ver a continuacio
 [![Agregar-un-t-tulo.png](https://i.postimg.cc/8cPG0cwM/Agregar-un-t-tulo.png)](https://postimg.cc/r0b7d8Bw)
 
 
-Si deseamos realizar cambios a nuestra simulacion
+Si deseamos realizar cambios a nuestra simulacion podemos hacer lo siguiente.
+
+Si deseamos modificar la generacion de nuestros animales podemos modificar la siguiente linea de codigo en nuestro archivo `animales.py`. 
+
+[![generacionanimales.png](https://i.postimg.cc/HnhL0bHV/generacionanimales.png)](https://postimg.cc/tnFypZsj)
 
