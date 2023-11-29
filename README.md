@@ -44,9 +44,25 @@ eventos en un archivo (log) o un archivo de texto como podemos ver a continuacio
 [![Agregar-un-t-tulo.png](https://i.postimg.cc/8cPG0cwM/Agregar-un-t-tulo.png)](https://postimg.cc/r0b7d8Bw)
 
 
-Si deseamos realizar cambios a nuestra simulacion podemos hacer lo siguiente.
+##Si deseamos realizar cambios a nuestra simulacion podemos hacer lo siguiente.
+
+En la linea 14 y 16 de nuestro archivo `animales.py` podremos modificar la cantidad de ciclos o de tiempo de cada reproduccion de los animales y la distancia de caza que pueden tener los depredadores al cazar sus presas.
+
+[![distancia.png](https://i.postimg.cc/Y0C9WMG2/distancia.png)](https://postimg.cc/Vr2myyW2)
 
 Si deseamos modificar la generacion de nuestros animales podemos modificar la siguiente linea de codigo en nuestro archivo `animales.py`. 
+en la parte del codigoque dice por ejemplo "`(Leon, 2, 2)`". la cual podemos modificar la aparicion de los animales generados en nuestra simulacion en este ejemplo podemos cambiar la cantidad de leones generados en nuestra simulacion. 
 
 [![generacionanimales.png](https://i.postimg.cc/HnhL0bHV/generacionanimales.png)](https://postimg.cc/tnFypZsj)
+
+
+En la linea 208 del archivo `animales.py` podemos cambiar el ciclo o el tiempo que pasa al cambiar el estado de horario de dia y noche.
+
+[![ciclos-dias.png](https://i.postimg.cc/pLJLqmfV/ciclos-dias.png)](https://postimg.cc/mPh4r2pK)
+
+Y en la linea 27 y 31 de nuestro archivo `plantas.py` podemos cambiar el tiempo de vida de las plantas podemos ajustar la cantidad de tiempo de vida estas mismas para que avance mas rapido o mas lento.
+
+[![gestionarvelocidadplantas.png](https://i.postimg.cc/RVnmbWB5/gestionarvelocidadplantas.png)](https://postimg.cc/xcYBXT8t)
+
+
 
