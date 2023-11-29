@@ -23,6 +23,11 @@ las interacciones de flora y fauna en un ambiente dinámico y visualmente accesi
 
  - y listo tendremos nuestra simulacion lista para ser utilizada.
 
+## Manual de Uso.
+
+Para utilzar nuestro simulador basta con ejecutar el archivo `mainprincipal.py` esto nos creara la siguiente ventana.
+
+[![captura.png](https://i.postimg.cc/dtz4VXdT/captura.png)](https://postimg.cc/kBvxjTTn)
  
 
 
