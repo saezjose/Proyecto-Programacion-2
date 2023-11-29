@@ -13,4 +13,6 @@ Para instalar nuestro simulador del ecosistema  primero que nada uno de los requ
 
 Una vez dicho esto para instalar instalar nuestro simulador solo basta con abrir el CMD o "simbolo del sistema" que se encuentra en nuestro ordenador y hacer un git clone a nuestro repositorio. 
 
+ `git clone `
+
 
