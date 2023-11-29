@@ -58,11 +58,11 @@ en la parte del codigoque dice por ejemplo "`(Leon, 2, 2)`". la cual podemos mod
 
 En la linea 208 del archivo `animales.py` podemos cambiar el ciclo o el tiempo que pasa al cambiar el estado de horario de dia y noche.
 
-[![ciclos-dias.png](https://i.postimg.cc/pLJLqmfV/ciclos-dias.png)](https://postimg.cc/mPh4r2pK)
+[![ciclos-dias.png](https://i.postimg.cc/g222tYNv/ciclos-dias.png)](https://postimg.cc/kBLCBdr4)
 
 Y en la linea 27 y 31 de nuestro archivo `plantas.py` podemos cambiar el tiempo de vida de las plantas podemos ajustar la cantidad de tiempo de vida estas mismas para que avance mas rapido o mas lento.
 
-[![gestionarvelocidadplantas.png](https://i.postimg.cc/RVnmbWB5/gestionarvelocidadplantas.png)](https://postimg.cc/xcYBXT8t)
+[![gestionarvelocidadplantas.png](https://i.postimg.cc/MpqdhLQ0/gestionarvelocidadplantas.png)](https://postimg.cc/qzDsKjQg)
 
 
 
